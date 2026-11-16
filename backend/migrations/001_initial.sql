@@ -1,0 +1,2 @@
+-- Initial schema is created through SQLAlchemy Base.metadata.create_all.
+-- Natural keys: users.email, shipments.code, samples.code; unique constraints enforce idempotency.
