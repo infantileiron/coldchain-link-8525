@@ -1,3 +1,8 @@
 ROLES=('admin','analyst','viewer')
 STATES=('queued','running','done','failed')
 ZONES=('冷藏','冷冻','常温对照')
+EXPOSURE_UNITS=('minute','hour','second')
+LOSS_UNITS=('percent','fraction')
+BATCH_STATES=('pending','previewed','published')
+ROW_STATES=('pending','qualified','quarantined','imported','conflict')
+QUARANTINE_REASONS=('unit_unknown','out_of_range','attribution_missing')

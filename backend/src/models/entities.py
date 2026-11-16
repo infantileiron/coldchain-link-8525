@@ -1,4 +1,4 @@
-from sqlalchemy import Column,Integer,String,Float,JSON,Text
+from sqlalchemy import Column,Integer,String,Float,JSON,Text,UniqueConstraint
 from src.config.database import Base
 class User(Base):
  __tablename__='users'
@@ -18,3 +18,15 @@ class Recommendation(Base):
 class Audit(Base):
  __tablename__='audits'
  id=Column(Integer,primary_key=True);actor=Column(String(100));action=Column(String(200));created=Column(String(40))
+class ImportMapping(Base):
+ __tablename__='import_mappings'
+ __table_args__=(UniqueConstraint('name','version'),)
+ id=Column(Integer,primary_key=True);name=Column(String(60));version=Column(Integer);spec=Column(JSON);created=Column(String(40))
+class ImportBatch(Base):
+ __tablename__='import_batches'
+ __table_args__=(UniqueConstraint('mapping_id','content_hash'),)
+ id=Column(Integer,primary_key=True);mapping_id=Column(Integer,index=True);mapping_version=Column(Integer);filename=Column(String(200));content_hash=Column(String(64));state=Column(String(20),default='pending');raw_count=Column(Integer,default=0);qualified_count=Column(Integer,default=0);quarantined_count=Column(Integer,default=0);imported_count=Column(Integer,default=0);conflict_count=Column(Integer,default=0);conflicts=Column(JSON,nullable=True);error=Column(Text,default='');created_by=Column(String(100));created=Column(String(40));published=Column(String(40),nullable=True)
+class ImportRow(Base):
+ __tablename__='import_rows'
+ __table_args__=(UniqueConstraint('batch_id','row_no'),)
+ id=Column(Integer,primary_key=True);batch_id=Column(Integer,index=True);row_no=Column(Integer);raw=Column(JSON);state=Column(String(20),default='pending');reasons=Column(JSON,nullable=True);normalized=Column(JSON,nullable=True);mapping_version=Column(Integer,nullable=True);shipment_id=Column(Integer,nullable=True);sample_id=Column(Integer,nullable=True)

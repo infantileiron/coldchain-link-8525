@@ -1,2 +1,5 @@
 /** @typedef {{id:number,code:string,route:string,zone:string,driver:string}} Shipment */
 /** @typedef {{id:number,state:'queued'|'running'|'done'|'failed',result:object}} Study */
+/** @typedef {{id:number,name:string,version:number,spec:{columns:Object<string,string>,units?:{exposure?:'minute'|'hour'|'second',loss?:'percent'|'fraction'}},created:string}} ImportMapping */
+/** @typedef {{id:number,mapping_id:number,mapping_version:number,filename:string,state:'pending'|'previewed'|'published',raw_count:number,qualified_count:number,quarantined_count:number,imported_count:number,conflict_count:number,conflicts:Array<{row_no:number,code:string,reason:string}>,error:string,created_by:string,created:string,published:string|null}} ImportBatch */
+/** @typedef {{id:number,batch_id:number,row_no:number,raw:Object<string,string>,state:'pending'|'qualified'|'quarantined'|'imported'|'conflict',reasons:Array<{code:'unit_unknown'|'out_of_range'|'attribution_missing'|'conflict',detail:string}>,normalized:{shipment:object,sample:object}|null,mapping_version:number|null,shipment_id:number|null,sample_id:number|null}} ImportRow */
